@@ -7,6 +7,7 @@ const BarraHerramientas = props =>
             <input 
                 type="checkbox" /> Mostar mis tópicos
         </label>
+        <button >Hacer nuevo tópico</button>
     </div>;
 
 BarraHerramientas.propTypes = {

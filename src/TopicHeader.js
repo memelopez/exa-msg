@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const TopicHeader = props => 
     <div className="topicHeader" >
-      <h3 className="topicAuthor" >{props.topicAuthor}</h3>
-      <h3>{props.topicName}</h3>  
+      <span className="topicAuthor" >{props.topicAuthor}</span>
+      <span className="topicName" >{props.topicName}</span>  
     </div>;
 
 TopicHeader.propTypes = {
