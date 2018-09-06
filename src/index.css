@@ -81,7 +81,7 @@ ul {
   border: solid 3px #0F5E8C;
   flex-grow: 1;
   margin: .35em;
-  min-width: 30%;
+  width: 32%;
 }
 
 
@@ -144,9 +144,11 @@ ul {
 .messageInputForm button {
   flex-grow: 1;
   background: #44ADAD;
+  margin: .2em;
 }
 
 .messageInputForm input {
   flex-grow: 1;
   border: dotted 1px #44ADAD;
+  margin: .2em;
 }
