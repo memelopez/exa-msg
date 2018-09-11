@@ -1,12 +1,22 @@
  import React, { Component } from 'react';
 import './App.css';
 
+import {
+  BrowserRouter,
+  Route
+} from 'react-router-dom';
+
+// APP COMPONENTS
 import BarraNavegacion from './BarraNavegacion'
 import MainContent from './MainContent';
+import NewTopic from './NewTopic';
 
 class App extends Component {
 
   state = {
+
+    newTopicName: "",
+    newTopicAuthor: "",
 
     topics: [
       {
@@ -115,7 +125,7 @@ class App extends Component {
     return id;
   };
 
-  newMessageId = (topicId) => {
+  newMessageId = (topicId) => { // se setea el nuevo nextMessageId cuando se sea el nuevo message en newMessageSubmitHandlerAt
     let id = 100;
     const topics = this.state.topics;
     console.log("el length de topics en newMessageId: "+topics.length);
@@ -141,11 +151,11 @@ class App extends Component {
         return topic;
       })
     });
-}
+  }
 
-newMessageSubmitHandlerAt = (e, topicId) => {
+  newMessageSubmitHandlerAt = (e, topicId) => {
   e.preventDefault();
-  console.log('en el topico con ID: '+topicId);
+// tomar el mensaje de algun topic en el estado
   let mensaje = "";
   const topics = this.state.topics;
   for (let i=0; i< topics.length; i++){
@@ -166,8 +176,8 @@ newMessageSubmitHandlerAt = (e, topicId) => {
   for (let i = 0; i < mensajes.length; i++) {
     console.log(mensajes[i].mensaje);    
   }
-  mensajes.push({idMensaje: id, mensaje: mensaje, autor: "anonimo"});
-  id+=1;
+  mensajes.push({idMensaje: id, mensaje: mensaje, autor: "anónimo"});
+  id+=1;//se  suma para poner el nextMessageId en el setState
   // ahora setiar el nuevo mensaje y el 
   this.setState({
     topics: this.state.topics.map((topic) => {//este topicId no se exactamente como es que lo agarra cuando hace esa funcion de map
@@ -190,17 +200,62 @@ newMessageSubmitHandlerAt = (e, topicId) => {
       return topic;
     })
   });
-}
+  }
+
+  // newTopicForm
+  handleNewTopicNameInput = e => 
+    this.setState({ newTopicName: e.target.value });
+  
+  handleNewTopicAuthorInput = e => 
+    this.setState({ newTopicAuthor: e.target.value });
+
+  newTopicSubmitHandler = e => {
+    e.preventDefault();
+    const name=this.state.newTopicName;
+    const author=this.state.newTopicAuthor;
+    let topics = this.state.topics;
+    const newTopicId= this.newTopicId();
+    console.log('este nombre: --> '+name+' y este autor: --> '+author+' para el nuevo topico en newTopicSubmitHandler en app.'+'cantidad topics: '+topics.length+ "y cno esta id: "+newTopicId);
+    topics.push(
+      {
+        idTopic: newTopicId,
+        topicName: name,
+        topicAuthor: author,
+        mensajes: [],
+        elmeroTexto: "",
+        nextMessageId: 0
+      }
+    );
+    // setiar
+    this.setState({ topics: topics, newTopicName: '', newTopicAuthor: '' });
+    // let path = `/`;
+    // this.props.history.push(path); COMO HAGO UNA REDIRECCION A OTRO URL AHORA
+  };
+
+// -----------------------------------------------------------------------------------------------
 
   render() {
     return (
-      <div className="App">
-        <BarraNavegacion/>
-        <MainContent
-          topics={this.state.topics} 
-          handleMessageInputAt={this.handleMessageInputAt}
-          newMessageSubmitHandlerAt={this.newMessageSubmitHandlerAt} />
-      </div>
+      <BrowserRouter>
+        <div className="App">
+
+          <BarraNavegacion />
+
+          <Route exact path= '/' 
+            render={ () => <MainContent topics={this.state.topics}
+                                handleMessageInputAt={this.handleMessageInputAt}
+                                newMessageSubmitHandlerAt={this.newMessageSubmitHandlerAt} />} />
+
+          <Route exact path= '/newTopic' 
+            render={ () => <NewTopic 
+                                valueNewTopicName={this.state.newTopicName}
+                                valueNewTopicAuthor={this.state.newTopicAuthor}
+                                handleNewTopicNameInput={this.handleNewTopicNameInput}
+                                handleNewTopicAuthorInput={this.handleNewTopicAuthorInput}
+                                newTopicSubmitHandler={this.newTopicSubmitHandler} />} />
+
+        </div>
+      </BrowserRouter>
     );
   }
 }

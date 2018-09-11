@@ -122,6 +122,8 @@ ul {
   height: 200px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  display: block;
 }
 
 .message {

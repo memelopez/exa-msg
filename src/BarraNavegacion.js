@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 
 const BarraNavegacion = props => 
     <header> 
-    <h1 className="name"><a href="#">Mensajería atrasada</a></h1>
+    <h1 className="name"><NavLink exact to="/" >Mensajería atrasada</NavLink></h1>
     <ul className="main-nav">
-        <li><a href="#">mensajes</a></li>
-        <li><a href="#">login</a></li>
-        <li><a href="#">register</a></li>
+        <li><NavLink exact to="/" >Home</NavLink></li>
+        <li><NavLink to="/register">Regsiter</NavLink></li>
+        <li><NavLink to="/logIn">Log In</NavLink></li>
 	</ul>
     </header>;
 
