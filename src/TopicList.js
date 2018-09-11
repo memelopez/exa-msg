@@ -6,17 +6,25 @@ import Topic from './Topic';
 const TopicList = props =>
         <ul className="topicList">
             {props.topics
-                .map((topic, id) =>
+                .map((topic) =>
                     <Topic
-                        key={id}
+                        key={topic.idTopic}
                         topicName={topic.topicName}
                         topicAuthor={topic.topicAuthor}
-                        messageList={topic.mensajes} />
+
+                        messageList={topic.mensajes} 
+
+                        elmeroTexto = {topic.elmeroTexto}
+                        handleMessageInput={text => props.handleMessageInputAt(text, topic.idTopic)}
+                        newMessageSubmitHandler={e => props.newMessageSubmitHandlerAt(e, topic.idTopic)} />
                 )}
         </ul>;
 
 TopicList.propTypes = {
-    topics: PropTypes.array.isRequired
+    topics: PropTypes.array.isRequired,
+    // messageinputform
+    handleMessageInputAt: PropTypes.func.isRequired,
+    newMessageSubmitHandlerAt: PropTypes.func.isRequired
 };
 
 export default TopicList;

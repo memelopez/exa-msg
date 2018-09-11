@@ -1,24 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-
-
 const MessageInputForm = props => 
-    <form className="messageInputForm" >
-        <TextField
-            id="Mensaje"
-            label="Mensaje"
-            margin="normal"
-            />
-        <Button variant="contained" color="primary">
-            Send
-        </Button>
+    <form onSubmit={props.newMessageSubmitHandler} className="messageInputForm" >
+        <input 
+            type="text"
+            onChange={props.handleMessageInput}
+            value={props.value} 
+            placeholder="Esciba un mensaje..." />
+        <button type="submit" name="submit" value="submit">Send</button>
     </form>;
 
 MessageInputForm.propTypes = {
+    value: PropTypes.string.isRequired,
+    handleMessageInput: PropTypes.func.isRequired,
+    newMessageSubmitHandler: PropTypes.func.isRequired
 }
 
 export default MessageInputForm;

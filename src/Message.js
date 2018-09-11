@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 
 const Message = props =>
     <div className="message" >
-        <span>{props.mensaje}</span>
-        <span>{props.autor}</span>
+        <span className="messageAuthor" >{props.autor}</span>
+        <span className="actualMessage" >{props.mensaje}</span>
     </div>;
 
 Message.propTypes = {

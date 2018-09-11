@@ -9,11 +9,15 @@ const MainContent = props =>
     <div className="mainContent">
         <BarraHerramientas/>
         <TopicList
-            topics={props.topics} />
+            topics={props.topics}
+            handleMessageInputAt= {props.handleMessageInputAt}
+            newMessageSubmitHandlerAt={props.newMessageSubmitHandlerAt} />
     </div>;
 
 MainContent.propTypes = {
-    topics: PropTypes.array.isRequired
+    topics: PropTypes.array.isRequired,
+    handleMessageInputAt: PropTypes.func.isRequired,
+    newMessageSubmitHandlerAt: PropTypes.func.isRequired
 } 
 
 export default MainContent;

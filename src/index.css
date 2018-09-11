@@ -10,6 +10,7 @@ body {
   padding: 0;
   font-family: 'Courier New', Courier, monospace;
   color: black;
+  background-color: white;
 }
 
 .App {
@@ -25,7 +26,7 @@ h3 {
 }
 
 header {
-  background: darkblue;
+  background: #3E506B;
   min-height: 60px;
   width: 100;
   text-align: center;
@@ -72,26 +73,28 @@ ul {
   width: 95%;
   padding: 0 1em;
   margin: 0 auto;
-  background-color: bisque;
 }
 
 .topicCard {
-  background: gray;
+  background: white;
   border-radius: .5em;
-  border: solid 3px rgba(88, 100, 205, 0.582);
-  border-bottom: solid 2px rgba(88, 183, 205, .15);
+  border: solid 3px #0F5E8C;
   flex-grow: 1;
-  margin: .5em;
+  margin: .35em;
+  width: 32%;
 }
 
 
 .barraHerramientas {
-  background: purple;
+  background: #E23A59;
   padding: 0 1em;
+  display: flex;
+  justify-content: space-evenly;
+  height: 30px;
 }
 
 .topicList {
-  background: green;
+  /* border: solid 2px red; */
   padding: 0 1em;
   display: flex;
   font-size: 1em;
@@ -99,29 +102,55 @@ ul {
 }
 
 .topicHeader {
-  background-color: yellow;
+  background-color: #0F5E8C;
   text-align: center;
   display: flex;
   flex-direction: column;
+  color: #FCC82B;
+  font-size: 1.25em;
+}
+
+.topicAuthor {
+  font-size: .8em;
+}
+
+.topicName {
+  text-transform: uppercase;
 }
 
 .messageList {
-  background: pink
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  display: block;
 }
 
 .message {
-  background: orange;
+  border-bottom: solid 1px #FCC82B;
+  display: flex;
+  flex-direction: column;
+  padding-left: 1em;
+}
+
+.messageAuthor {
+  font-size: .7em
 }
 
 .messageInputForm {
   display: flex;
+  justify-content: space-between;
+  padding: .5em;
 }
 
-.messageInputForm input, 
 .messageInputForm button {
   flex-grow: 1;
+  background: #44ADAD;
+  margin: .2em;
 }
 
-.topicAuthor {
-  font-size: 1em;
+.messageInputForm input {
+  flex-grow: 1;
+  border: dotted 1px #44ADAD;
+  margin: .2em;
 }
