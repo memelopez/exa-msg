@@ -1,7 +1,8 @@
  import React, { Component } from 'react';
 import './App.css';
 import { DB_CONFIG } from './Config/config';
-// import firebase from 'firebase/app';
+import firebase from 'firebase/app';
+import 'firebase/database';
 
 import {
   BrowserRouter,
@@ -17,15 +18,40 @@ class App extends Component {
 
   constructor(props){
     super(props);
-    this.state = {
 
+    this.app = firebase.initializeApp(DB_CONFIG);
+    this.database = this.app.database().ref().child('topics');
+
+    this.state = {
       newTopicName: "",
       newTopicAuthor: "",
       topics: []
     }
   }
 
-  lastTopicId = 4;
+  componentWillMount(){
+    const previousTopics = this.state.topics;
+
+    // Data Snapshot object 
+    this.database.on('child_added', snap =>{
+      previousTopics.push({
+        idTopic: snap.key,
+        topicName: snap.val().topicName,
+        topicAuthor: snap.val().topicAuthor,
+        mensajes: snap.val().mensajes,
+        elmeroTexto: snap.val().elmeroTexto,
+        nextMessageId: snap.val().newMessageId
+      })
+
+      this.setState({
+        topics: previousTopics,
+        newTopicName: "",
+      newTopicAuthor: ""
+      });
+    })
+  }
+
+  lastTopicId = 0;
 
   newTopicId = () => {
     const id = this.lastTopicId +1;
@@ -119,25 +145,37 @@ class App extends Component {
 
   newTopicSubmitHandler = e => {
     e.preventDefault();
+    // const name=this.state.newTopicName;
+    // const author=this.state.newTopicAuthor;
+    // let topics = this.state.topics;
+    // const newTopicId= this.newTopicId();
+    // console.log('este nombre: --> '+name+' y este autor: --> '+author+' para el nuevo topico en newTopicSubmitHandler en app.'+'cantidad topics: '+topics.length+ "y cno esta id: "+newTopicId);
+    // topics.push(
+    //   {
+    //     idTopic: newTopicId,
+    //     topicName: name,
+    //     topicAuthor: author,
+    //     mensajes: [],
+    //     elmeroTexto: "",
+    //     nextMessageId: 0
+    //   }
+    // );
+    // // setiar
+    // this.setState({ topics: topics, newTopicName: '', newTopicAuthor: '' });
+    // // let path = `/`;
+    // // this.props.history.push(path); COMO HAGO UNA REDIRECCION A OTRO URL AHORA
+
+    const newTopicId= this.newTopicId();
     const name=this.state.newTopicName;
     const author=this.state.newTopicAuthor;
-    let topics = this.state.topics;
-    const newTopicId= this.newTopicId();
-    console.log('este nombre: --> '+name+' y este autor: --> '+author+' para el nuevo topico en newTopicSubmitHandler en app.'+'cantidad topics: '+topics.length+ "y cno esta id: "+newTopicId);
-    topics.push(
-      {
-        idTopic: newTopicId,
-        topicName: name,
-        topicAuthor: author,
-        mensajes: [],
-        elmeroTexto: "",
-        nextMessageId: 0
-      }
-    );
-    // setiar
-    this.setState({ topics: topics, newTopicName: '', newTopicAuthor: '' });
-    // let path = `/`;
-    // this.props.history.push(path); COMO HAGO UNA REDIRECCION A OTRO URL AHORA
+    this.database.push().set({
+      idTopic: newTopicId,
+      topicName: name,
+      topicAuthor: author,
+      mensajes: [{idMensaje: 0, mensaje: "vamos", autor: "anónimo"}],
+      elmeroTexto: "",
+      nextMessageId: 1
+    });
   };
 
 // -----------------------------------------------------------------------------------------------
